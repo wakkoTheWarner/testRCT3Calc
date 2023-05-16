@@ -11,7 +11,7 @@
 			  var input = document.getElementById("input").value;
 			  var result = input * num;
 			  result = roundToFive(result); // round to the nearest 0.05
-			  document.getElementById("output1").innerHTML = result;
+			  document.getElementById("output").innerHTML = result;
 			}
 
 			function adjustPrice(id) {
@@ -21,18 +21,18 @@
 			  if (id == "tooExpensive") {
 				result = input * (1 - factor); // lower the price by a percentage
 				var goodValue = document.getElementById("goodValue").value; // get the value in the good value input
-				if (goodValue && result < goodValue) { // if there is a value and the result is lower than it
-				  result = goodValue; // set the result to be equal to the good value
+				if (goodValue) { // if there is a value
+				  result = (Number(goodValue) + Number(input)) / 2; // set the result to be the midpoint between the input and the good value
 				}
 			  } else if (id == "goodValue") {
 				result = input * (1 + factor); // increase the price by a percentage
 				var tooExpensive = document.getElementById("tooExpensive").value; // get the value in the too expensive input
-				if (tooExpensive && result > tooExpensive) { // if there is a value and the result is higher than it
-				  result = tooExpensive; // set the result to be equal to the too expensive value
+				if (tooExpensive) { // if there is a value
+				  result = (Number(tooExpensive) + Number(input)) / 2; // set the result to be the midpoint between the input and the too expensive value
 				}
 			  }
 			  result = roundToFive(result); // round to the nearest 0.05
-			  document.getElementById("output2").innerHTML = result;
+			  document.getElementById("output").innerHTML = result;
 			}
 
 			function roundToFive(num) {
