@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<script>
+			function multiplyBy(num) {
+			  var input = document.getElementById("input").value;
+			  var result = input * num;
+			  document.getElementById("output").innerHTML = result;
+			}
+
+			function adjustPrice(id) {
+			  var input = document.getElementById(id).value;
+			  var factor = Math.random() * 0.15 + 0.1; // random number between 0.1 and 0.25
+			  var result;
+			  if (id == "tooExpensive") {
+				result = input * (1 - factor); // lower the price by a percentage
+			  } else if (id == "goodValue") {
+				result = input * (1 + factor); // increase the price by a percentage
+			  }
+			  document.getElementById("output").innerHTML = result;
+			}
+		</script>
+	</head>
+	
+	<body>
+		<h1>RollerCoaster Tycoon 3 Calculator</h1>
+		<input id="input" type="number" placeholder="Enter a number">
+		<button onclick="multiplyBy(1.75)">Shop Price Calculator</button>
+		<button onclick="multiplyBy(0.85)">Ride Price Calculator</button>
+		<br>
+		<br>
+		<br>
+		<br>
+		<input id="tooExpensive" type="number" placeholder="Too expensive">
+		<button onclick="adjustPrice('tooExpensive')">Lower the price</button>
+		<br>
+		<br>
+		<input id="goodValue" type="number" placeholder="Good value">
+		<button onclick="adjustPrice('goodValue')">Increase the price</button>
+		<p id="output"></p>
+	</body>
+</html>
