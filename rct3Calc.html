@@ -1,11 +1,17 @@
 <!doctype html>
 <html>
 	<head>
+		<style>
+			* {
+				background-color: white;
+			}
+		</style>
 		<script>
 			function multiplyBy(num) {
 			  var input = document.getElementById("input").value;
 			  var result = input * num;
-			  document.getElementById("output").innerHTML = result;
+			  result = roundToFive(result); // round to the nearest 0.05
+			  document.getElementById("output1").innerHTML = result;
 			}
 
 			function adjustPrice(id) {
@@ -14,10 +20,31 @@
 			  var result;
 			  if (id == "tooExpensive") {
 				result = input * (1 - factor); // lower the price by a percentage
+				var goodValue = document.getElementById("goodValue").value; // get the value in the good value input
+				if (goodValue && result < goodValue) { // if there is a value and the result is lower than it
+				  result = goodValue; // set the result to be equal to the good value
+				}
 			  } else if (id == "goodValue") {
 				result = input * (1 + factor); // increase the price by a percentage
+				var tooExpensive = document.getElementById("tooExpensive").value; // get the value in the too expensive input
+				if (tooExpensive && result > tooExpensive) { // if there is a value and the result is higher than it
+				  result = tooExpensive; // set the result to be equal to the too expensive value
+				}
 			  }
-			  document.getElementById("output").innerHTML = result;
+			  result = roundToFive(result); // round to the nearest 0.05
+			  document.getElementById("output2").innerHTML = result;
+			}
+
+			function roundToFive(num) {
+			  num = num.toFixed(2); // keep two decimal places
+			  var lastDigit = num.slice(-1); // get the last digit
+			  if (lastDigit == "0" || lastDigit == "5") {
+				return num; // no need to change
+			  } else if (lastDigit < "5") {
+				return num.slice(0, -1) + "5"; // round up to the next 0.05
+			  } else {
+				return (Number(num) + 0.05).toFixed(2); // round up to the next 0.1
+			  }
 			}
 		</script>
 	</head>
@@ -28,8 +55,7 @@
 		<button onclick="multiplyBy(1.75)">Shop Price Calculator</button>
 		<button onclick="multiplyBy(0.85)">Ride Price Calculator</button>
 		<br>
-		<br>
-		<br>
+		<p id="output1"></p>
 		<br>
 		<input id="tooExpensive" type="number" placeholder="Too expensive">
 		<button onclick="adjustPrice('tooExpensive')">Lower the price</button>
@@ -37,6 +63,6 @@
 		<br>
 		<input id="goodValue" type="number" placeholder="Good value">
 		<button onclick="adjustPrice('goodValue')">Increase the price</button>
-		<p id="output"></p>
+		<p id="output2"></p>
 	</body>
 </html>
